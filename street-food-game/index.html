@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>길거리 장사 대전 — 노점 스무 곳이 매출로 겨루는 3분 요리 게임</title>
+<meta name="description" content="한 거리에 노점 스무 곳. 목표 매출을 먼저 찍는 순서로 순위가 갈린다. 한 판 3분짜리 길거리 음식 요리 게임. tvN 「스트릿 레스토랑 파이터」를 보고 비슷한 걸 찾는 분들이 많이 옵니다 — 공식 게임은 아닙니다. 무료 · 안드로이드.">
+<link rel="canonical" href="https://dangel8282.github.io/street-food-game/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="길거리 장사 대전">
+<meta property="og:title" content="길거리 장사 대전 — 노점 스무 곳이 매출로 겨루는 3분 요리 게임">
+<meta property="og:description" content="한 거리에 노점 스무 곳. 목표 매출을 먼저 찍는 순서로 순위가 갈린다. 한 판 3분. 무료 · 안드로이드.">
+<meta property="og:url" content="https://dangel8282.github.io/street-food-game/">
+<meta property="og:image" content="https://dangel8282.github.io/street-food-game/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="길거리 장사 대전 — 노점 스무 곳이 매출로 겨루는 3분 요리 게임">
+<meta name="twitter:description" content="한 거리에 노점 스무 곳. 목표 매출을 먼저 찍는 순서로 순위가 갈린다. 한 판 3분. 무료 · 안드로이드.">
+<meta name="twitter:image" content="https://dangel8282.github.io/street-food-game/img/og.jpg">
+
+<link rel="icon" href="img/icon.webp" type="image/webp">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+
+<style>
+:root{
+  --bg:#17120f; --surface:#1c1715; --surface2:#221c19; --line:#2e2724;
+  --ink:#e8e0d6; --dim:#a2958c; --mute:#8d8079;
+  --hot:#ff8c42; --warm:#ffc861; --gold:#ffb454; --good:#7fd18a;
+  --wrap:53rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font:16px/1.75 "Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,sans-serif;
+  word-break:keep-all; overflow-wrap:anywhere;
+}
+img,video{max-width:100%;height:auto;display:block}
+a{color:var(--hot)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+section{padding:52px 0;border-top:1px solid var(--line)}
+h2{font-size:1.5rem;line-height:1.4;letter-spacing:-.02em;margin-bottom:.5rem}
+h3{font-size:1.05rem;margin-bottom:.25rem;color:var(--warm)}
+.lede{color:var(--dim);margin-bottom:2rem;font-size:1rem}
+p+p{margin-top:.9rem}
+em{font-style:normal;font-weight:600;color:var(--ink)}
+
+/* ── 히어로 ── */
+.hero{border-top:0;padding:60px 0 52px;
+  background:radial-gradient(120% 90% at 50% 0%,#2a1d14 0%,var(--bg) 62%)}
+.hero .badge{display:inline-block;font-size:.8rem;color:var(--gold);
+  border:1px solid #4a3a2c;border-radius:999px;padding:3px 12px;margin-bottom:18px}
+h1{font-size:2.3rem;line-height:1.25;letter-spacing:-.03em;margin-bottom:.7rem}
+h1 .sub{display:block;font-size:1.05rem;font-weight:400;color:var(--gold);
+  letter-spacing:0;margin-top:.55rem;line-height:1.6}
+.hero p.pitch{font-size:1.08rem;color:var(--dim);max-width:34rem;margin-bottom:1.6rem}
+.spec{list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;
+  font-size:.85rem;color:var(--mute);margin-top:1.1rem}
+.spec li{background:var(--surface);border:1px solid var(--line);
+  border-radius:6px;padding:3px 10px}
+
+.cta{display:inline-flex;align-items:center;gap:10px;
+  background:var(--hot);color:#20150c;font-weight:700;font-size:1.05rem;
+  text-decoration:none;padding:15px 30px;border-radius:11px;
+  box-shadow:0 6px 20px rgba(255,140,66,.22)}
+.cta:hover{background:var(--warm)}
+.cta small{display:block;font-weight:400;font-size:.75rem;opacity:.72;margin-top:1px}
+
+/* ── 영상 ── */
+.film{margin:0 auto;max-width:300px;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;background:#000}
+.film video{width:100%;display:block}
+.caption{text-align:center;color:var(--mute);font-size:.85rem;margin-top:.8rem}
+
+/* ── 브리지 ── */
+.bridge{background:var(--surface);border-top:1px solid var(--line)}
+table.cmp{width:100%;border-collapse:collapse;margin:1.4rem 0 1.6rem;font-size:.95rem}
+table.cmp th,table.cmp td{padding:11px 12px;border-bottom:1px solid var(--line);
+  text-align:left;vertical-align:top}
+table.cmp thead th{font-size:.8rem;color:var(--mute);font-weight:600;
+  border-bottom-color:#3d3229}
+table.cmp td:first-child{color:var(--dim);width:42%}
+table.cmp td:last-child{color:var(--ink)}
+.note{border-left:3px solid var(--gold);background:var(--surface2);
+  padding:14px 16px;border-radius:0 8px 8px 0;font-size:.92rem;color:var(--dim)}
+.note b{color:var(--warm)}
+
+/* ── 진행 단계 ── */
+.steps{display:grid;gap:34px;margin-top:1.5rem}
+.step{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:start}
+.step img{border:1px solid var(--line);border-radius:10px;width:180px}
+.step .n{display:inline-block;font-size:.75rem;color:var(--bg);background:var(--gold);
+  border-radius:4px;padding:1px 7px;font-weight:700;margin-bottom:.5rem}
+.step p{color:var(--dim);font-size:.95rem}
+
+/* ── 상권 ── */
+.zones{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:12px;margin-top:1.4rem}
+.zones li{background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;padding:14px 16px}
+.zones .zn{font-weight:700;color:var(--ink)}
+.zones .tag{font-size:.72rem;color:var(--gold);border:1px solid #4a3a2c;
+  border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+.zones .zq{display:block;color:var(--dim);font-size:.9rem;margin-top:.35rem}
+
+/* ── 카드 ── */
+.odds{display:flex;flex-wrap:wrap;gap:8px;margin:1.2rem 0;list-style:none}
+.odds li{background:var(--surface);border:1px solid var(--line);border-radius:8px;
+  padding:8px 14px;font-size:.9rem}
+.odds b{color:var(--warm)}
+.split{display:grid;grid-template-columns:1fr 180px;gap:24px;align-items:start}
+.split img{border:1px solid var(--line);border-radius:10px;width:100%}
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:1.9rem}
+.ladder img{border-radius:9px;width:100%}
+.ladder figcaption{font-size:.85rem;color:var(--dim);margin-top:7px;text-align:center}
+.ladder b{color:var(--warm);font-size:.95rem}
+
+/* ── FAQ ── */
+details{border-bottom:1px solid var(--line);padding:16px 0}
+details summary{cursor:pointer;font-weight:600;list-style:none;
+  display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--gold);font-weight:400;flex:none}
+details[open] summary::after{content:"–"}
+details .a{color:var(--dim);font-size:.95rem;margin-top:.7rem}
+
+/* ── 푸터 ── */
+footer{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--mute);font-size:.88rem}
+footer a{color:var(--dim)}
+footer .end{text-align:center;padding-bottom:34px;border-bottom:1px solid var(--line);margin-bottom:26px}
+.links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:1rem}
+
+@media (max-width:640px){
+  h1{font-size:1.85rem}
+  h2{font-size:1.3rem}
+  section{padding:40px 0}
+  .step{grid-template-columns:1fr;gap:14px}
+  .step img{width:64%;max-width:190px}
+  .split{grid-template-columns:1fr}
+  .split img{width:60%;max-width:180px}
+  .ladder{grid-template-columns:1fr 1fr;gap:10px}
+  .cta{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ 히어로 ══════════ -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">안드로이드 · 무료</span>
+    <h1>길거리 장사 대전
+      <span class="sub">노점 스무 곳이 매출로 겨루는 3분짜리 길거리 음식 요리 게임</span>
+    </h1>
+    <p class="pitch">거리 하나에 노점이 스무 곳 선다. 목표 매출을 먼저 찍는 순서대로 순위가 정해진다.
+      한 판은 길어야 3분, 보통은 그 전에 끝난다.</p>
+
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.wildstorm.streetvendorbattle">
+      Google Play 에서 받기
+      <small>무료 · 광고 있음</small>
+    </a>
+
+    <ul class="spec">
+      <li>안드로이드 7.0 이상</li>
+      <li>내려받기 약 55MB</li>
+      <li>한국어 · 영어</li>
+      <li>계정 없음</li>
+      <li>뽑기 현금 판매 없음</li>
+    </ul>
+  </div>
+</header>
+
+<!-- ══════════ 영상 ══════════ -->
+<section>
+  <div class="wrap">
+    <div class="film">
+      <video controls preload="none" playsinline poster="img/ad-poster.webp">
+        <source src="video/ad.mp4" type="video/mp4">
+      </video>
+    </div>
+    <p class="caption">15초. 전부 실제 플레이 화면이다.</p>
+  </div>
+</section>
+
+<!-- ══════════ 방송 브리지 ══════════
+     ⚠ 이 섹션만 방송을 언급한다. 빼려면 <section class="bridge"> 통째로 지우면 되고
+       나머지 페이지는 그대로 성립한다. 제목(<title>)·h1·og 에는 방송명이 없다. -->
+<section class="bridge">
+  <div class="wrap">
+    <h2>「스트릿 레스토랑 파이터」 보고 오셨나요?</h2>
+    <p class="lede">방송을 보고 비슷한 걸 폰에서 해보고 싶어 찾아오는 분이 많아 적어 둡니다.</p>
+
+    <p>방송은 스무 팀이 길에 나가서 <em>매출 하나로</em> 순위를 가립니다. 이 게임도 그렇습니다.
+      다만 한 판이 3분이고, 요리는 조리대를 손가락으로 두드려서 합니다.</p>
+
+    <table class="cmp">
+      <thead><tr><th>방송에서 본 것</th><th>이 게임</th></tr></thead>
+      <tbody>
+        <tr><td>스무 팀이 한 거리에서 장사한다</td><td>라이벌 노점 19곳 + 나. 스무 팀 그대로다</td></tr>
+        <tr><td>순위는 매출로만 가린다</td><td>목표 매출을 먼저 찍는 순서로 순위가 확정된다</td></tr>
+        <tr><td>장소가 바뀌면 손님이 바뀐다</td><td>상권 여덟 곳. 찾는 음식과 씀씀이가 다 다르다</td></tr>
+        <tr><td>하루 종일 영업한다</td><td>한 판 3분. 출근길에 한 판 한다</td></tr>
+        <tr><td>진짜 요리를 한다</td><td>조리대를 두드린다. 메뉴마다 필요한 탭수가 다르다</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note"><b>공식 게임이 아닙니다.</b> tvN 「스트릿 레스토랑 파이터」(스레파)와 아무 관계가 없고,
+      방송사·제작진·출연자와도 무관합니다. 1인이 만든 개인 게임입니다.
+      방송 이름을 여기 적은 건 그 방송을 보고 찾아오신 분께 <em>무엇이 같고 무엇이 다른지</em>
+      먼저 말씀드리려는 것뿐입니다.</p>
+  </div>
+</section>
+
+<!-- ══════════ 한 판 ══════════ -->
+<section>
+  <div class="wrap">
+    <h2>한 판이 이렇게 갑니다</h2>
+    <p class="lede">고르고, 짜고, 3분 두드리고, 정산합니다.</p>
+
+    <div class="steps">
+
+      <div class="step">
+        <img src="img/map.webp" width="480" height="1040" loading="lazy"
+             alt="상권 고르기 화면 — 새벽 시장, 부둣가, 환승역 앞, 관광 포차, 미식 축제가 길로 이어져 있다">
+        <div>
+          <span class="n">1</span>
+          <h3>어디서 팔지 고른다</h3>
+          <p>상권마다 찾는 음식이 다릅니다. <em>부둣가</em>는 해산물, <em>환승역 앞</em>은 빨리 나오는 국물,
+            <em>새벽 시장</em>은 튀김입니다. 목표 매출도 상권마다 다릅니다 —
+            첫 상권이 69만원이고, 한 곳 넘어갈 때마다 11만 5천원씩 올라 마지막 상권은 149만 5천원입니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <img src="img/prep.webp" width="480" height="1040" loading="lazy"
+             alt="메뉴 준비 화면 — 조리대 여섯 칸에 올릴 메뉴 카드를 고른다">
+        <div>
+          <span class="n">2</span>
+          <h3>조리대 여섯 칸을 짠다</h3>
+          <p>가진 카드 중 여섯 장만 걸 수 있습니다. 손님 취향은 면·고기·해산물·밥·튀김·국물·분식
+            일곱 가지라 <em>여섯 칸으로는 전부를 못 덮습니다.</em> 무엇을 버릴지가 판 전의 유일한 결정입니다.</p>
+          <p>비싼 카드만 걸면 객단가는 오르지만 손이 모자랍니다. 7탭짜리 메뉴는 완성까지 일곱 번을
+            두드려야 하고, 서빙에 한 번을 더 씁니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <img src="img/play.webp" width="480" height="1040" loading="lazy"
+             alt="장사 화면 — 거리에 손님이 줄을 서고 오더 게시판에 주문이 쌓인다">
+        <div>
+          <span class="n">3</span>
+          <h3>3분 동안 두드린다</h3>
+          <p>지나가던 사람 머리 위에 하얀 파동이 뜨면 관심이 생긴 겁니다. <em>그때 탭하면 열에 아홉이
+            손님이 됩니다.</em> 파동 없는 사람을 아무리 눌러도 거의 안 붙습니다. 파동은 1~2초면 꺼지고
+            거리에 동시에 세 명까지만 뜹니다.</p>
+          <p>주문이 들어오면 조리대를 두드려 만들고 서빙을 누릅니다. 20초를 넘기면 손님이 취소하고
+            가게 별점이 깎입니다. 손이 벅차면 <em>주문 정지</em>로 새 주문을 잠시 막을 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <img src="img/result.webp" width="480" height="1040" loading="lazy"
+             alt="장사 종료 화면 — 매출 847,280원, 20팀 중 1위, 메뉴별 매출과 순이익">
+        <div>
+          <span class="n">4</span>
+          <h3>정산한다</h3>
+          <p>몇 등인지, 무엇이 얼마나 팔렸는지, 재료비를 빼고 얼마가 남았는지가 나옵니다.
+            남은 돈이 다음 카드를 뽑는 밑천입니다.</p>
+          <p>상권마다 라운드가 네 판입니다. R1은 15위 안, R2는 10위 안이면 통과고
+            <em>R2를 넘기면 다음 상권이 열립니다.</em> R3(5위 안)와 R4(1위)는 그다음의 하드모드라
+            져도 잃는 게 없습니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 상권 ══════════ -->
+<section>
+  <div class="wrap">
+    <h2>상권 여덟 곳</h2>
+    <p class="lede">같은 편성으로 여덟 곳을 다 먹을 수는 없습니다.</p>
+    <ul class="zones">
+      <li><span class="zn">공터 장터</span><span class="tag">면</span>
+        <span class="zq">특별한 입맛 없는 동네</span></li>
+      <li><span class="zn">대학가</span><span class="tag">분식</span>
+        <span class="zq">다들 학생이라 주머니가 얇다</span></li>
+      <li><span class="zn">오피스 점심</span><span class="tag">밥</span>
+        <span class="zq">점심 한 시간에 우르르 왔다 간다</span></li>
+      <li><span class="zn">새벽 시장</span><span class="tag">튀김</span>
+        <span class="zq">손님이 다 새벽 장사꾼들이다</span></li>
+      <li><span class="zn">부둣가</span><span class="tag">해산물</span>
+        <span class="zq">배 들어올 때까지 다들 시간이 남는다</span></li>
+      <li><span class="zn">환승역 앞</span><span class="tag">국물</span>
+        <span class="zq">차 갈아타는 길에 후루룩 한 그릇</span></li>
+      <li><span class="zn">관광 포차</span><span class="tag">고기</span>
+        <span class="zq">놀러 온 사람들은 돈을 안 아낀다</span></li>
+      <li><span class="zn">미식 축제</span><span class="tag">면</span>
+        <span class="zq">전국에서 먹으러 모인 사람들</span></li>
+    </ul>
+    <p style="margin-top:1.4rem;color:var(--dim);font-size:.95rem">
+      씀씀이와 성격도 같이 바뀝니다. 부둣가 손님은 돈을 잘 쓰고 오래 기다려 줍니다.
+      오피스 점심은 지갑은 보통인데 성격이 급해서, 게시판을 오래 물고 있으면 그냥 취소하고 갑니다.</p>
+  </div>
+</section>
+
+<!-- ══════════ 카드 ══════════ -->
+<section>
+  <div class="wrap">
+    <h2>메뉴 카드 57장</h2>
+    <p class="lede">시작할 때 가진 건 우렁 간짜장 한 장뿐입니다.</p>
+
+    <div class="split">
+      <div>
+        <p>장사로 번 돈으로 카드를 뽑습니다. <em>한 번에 20만원이고, 현금으로는 못 삽니다</em> —
+          판에서 번 돈으로만 뽑습니다.</p>
+
+        <ul class="odds">
+          <li>S <b>5%</b></li><li>A <b>12%</b></li><li>B <b>35%</b></li><li>C <b>48%</b></li>
+        </ul>
+
+        <p>같은 카드가 <em>세 장 겹치면</em> 등급이 한 칸 오릅니다. C에서 시작해 B, A, S를 지나
+          S+까지 갑니다. <em>S+는 뽑기로는 절대 안 나옵니다</em> — 겹쳐서만 닿는 자리입니다.
+          S+가 되면 그 메뉴는 두드릴 횟수가 하나 줄어듭니다.</p>
+
+        <p>등급은 별점이기도 합니다. C가 ★3.0, S+가 ★5.0입니다. 편성 여섯 장의 평균 별점이
+          그 판 매출에 배수로 한 번 실립니다 — C만 걸면 정가 그대로, S+로 채우면 127%입니다.
+          등급이 높으면 발길을 멈추는 사람도 늘고, 한 사람이 시키는 접시 수도 늘어납니다.</p>
+      </div>
+      <img src="img/brief.webp" width="480" height="1040" loading="lazy"
+           alt="브리핑 화면 — 결승선 81만원, 합격 5위 안, 편성 여섯 장의 평균 별점">
+    </div>
+
+    <div class="ladder">
+      <figure>
+        <img src="img/card_s.webp" width="368" height="470" loading="lazy"
+             alt="S등급 카드 「통 치미창가」 — 별점 4.5 · 12,000원 · 6탭">
+        <figcaption><b>S</b> ★4.5</figcaption>
+      </figure>
+      <figure>
+        <img src="img/card_a.webp" width="368" height="470" loading="lazy"
+             alt="A등급 카드 「물회 국수 한 상」 — 별점 4.0 · 14,000원 · 7탭">
+        <figcaption><b>A</b> ★4.0</figcaption>
+      </figure>
+      <figure>
+        <img src="img/card_b.webp" width="368" height="470" loading="lazy"
+             alt="B등급 카드 「새콤 오이무침」 — 별점 3.5 · 4,000원 · 3탭">
+        <figcaption><b>B</b> ★3.5</figcaption>
+      </figure>
+      <figure>
+        <img src="img/card_c.webp" width="368" height="470" loading="lazy"
+             alt="C등급 카드 「구운 크렘 캐러멜」 — 별점 3.0 · 4,000원 · 3탭">
+        <figcaption><b>C</b> ★3.0</figcaption>
+      </figure>
+    </div>
+    <p class="caption">등급마다 한 장씩. 테두리 색과 별점이 다릅니다.</p>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section>
+  <div class="wrap">
+    <h2>자주 묻는 것</h2>
+    <div style="margin-top:1.2rem">
+
+      <details>
+        <summary>무료인가요? 광고는 어떻게 나오나요?</summary>
+        <div class="a">무료입니다. 배너 광고는 없습니다 — 화면 구석에 계속 붙어 있는 띠가 없다는 뜻입니다.
+          판 사이에 전면 광고가 뜨고, 보상형 광고는 보상을 두 배로 받거나 지원금을 받을 때
+          <em>직접 누를 때만</em> 나옵니다. 5,900원짜리 「광고 제거」를 사면 전면 광고가 안 뜨고,
+          보상형 자리는 광고를 안 보고도 보상을 그대로 받습니다.</div>
+      </details>
+
+      <details>
+        <summary>뽑기를 현금으로 살 수 있나요?</summary>
+        <div class="a">없습니다. 카드는 장사로 번 돈으로만 뽑습니다. 인앱 결제는 「광고 제거」
+          하나뿐이고 그건 게임 진행에 아무 영향이 없습니다. 뽑기 확률(S 5% · A 12% · B 35% · C 48%)은
+          뽑기 화면에 그대로 적혀 있습니다.</div>
+      </details>
+
+      <details>
+        <summary>인터넷이 있어야 하나요?</summary>
+        <div class="a">판 자체는 인터넷 없이 돌아갑니다. 순위표와 광고만 안 나옵니다.
+          지하철에서 신호가 끊겨도 하던 판은 그대로 갑니다.</div>
+      </details>
+
+      <details>
+        <summary>회원가입이나 로그인이 필요한가요?</summary>
+        <div class="a">없습니다. 받으면 바로 시작합니다.
+          다만 라운드를 끝까지 끊은 판은 가게 상호명과 함께 순위표에 올라갑니다 —
+          상호명은 직접 지으신 이름이라 남들에게 보입니다. 자세한 건
+          <a href="https://dangel8282.github.io/StreetVendorBattle/">개인정보처리방침</a>을 봐 주세요.</div>
+      </details>
+
+      <details>
+        <summary>한 판이 정말 3분인가요?</summary>
+        <div class="a">길어야 3분입니다. 목표 매출을 먼저 찍으면 거기서 끝나니 보통은 더 짧습니다.
+          실제로 녹화된 한 판은 20팀 중 꼴찌로 시작해 85만원으로 1위를 끊었고,
+          그 3분 동안 화면을 558번 눌렀습니다.</div>
+      </details>
+
+      <details>
+        <summary>어떤 기기에서 되나요? 용량은요?</summary>
+        <div class="a">안드로이드 7.0 이상이면 됩니다. 내려받는 크기는 약 55MB입니다.
+          세로 화면 한 손 조작으로 만들었고 태블릿에서도 돌아갑니다.</div>
+      </details>
+
+      <details>
+        <summary>아이폰에서도 되나요?</summary>
+        <div class="a">아직 안드로이드만 있습니다.</div>
+      </details>
+
+      <details>
+        <summary>「스트릿 레스토랑 파이터」 공식 게임인가요?</summary>
+        <div class="a">아닙니다. tvN 「스트릿 레스토랑 파이터」(스레파, 스트리트 레스토랑 파이터로도
+          많이 씁니다)와 아무 관계가 없습니다. 방송사·제작진·출연자와 무관한 1인 개발 게임이고,
+          방송에 나온 팀이나 가게나 메뉴는 이 게임에 하나도 들어 있지 않습니다.
+          길에서 노점을 열고 매출로 겨룬다는 소재가 겹칠 뿐입니다.</div>
+      </details>
+
+      <details>
+        <summary>「대전」이면 격투 게임인가요?</summary>
+        <div class="a">아닙니다. 겨룬다는 뜻의 대전(對戰)입니다. 대전광역시와도 상관없습니다.
+          싸우는 장면은 없고 요리하고 파는 게 전부입니다.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 만든 사람 ══════════ -->
+<section>
+  <div class="wrap">
+    <h2>혼자 만들었습니다</h2>
+    <p style="color:var(--dim);max-width:40rem">
+      WildStorm82 라는 이름으로 혼자 게임을 만듭니다. 이 게임은 Godot 으로 만들었고
+      첫 줄을 쓴 날부터 스토어에 올리기까지 29일 걸렸습니다.</p>
+    <p style="color:var(--dim);max-width:40rem;margin-top:.9rem">
+      아직 갓 나온 게임이라 고칠 데가 많습니다. 하다가 이상한 걸 보시면 메일로 알려 주세요 —
+      실제로 그렇게 고친 게 여럿입니다.</p>
+  </div>
+</section>
+
+<!-- ══════════ 푸터 ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="end">
+      <a class="cta" href="https://play.google.com/store/apps/details?id=com.wildstorm.streetvendorbattle">
+        Google Play 에서 받기
+        <small>무료 · 광고 있음</small>
+      </a>
+    </div>
+    <div class="links">
+      <a href="https://play.google.com/store/apps/details?id=com.wildstorm.streetvendorbattle">Google Play</a>
+      <a href="https://dangel8282.github.io/StreetVendorBattle/">개인정보처리방침</a>
+      <a href="mailto:joohwan82@gmail.com">joohwan82@gmail.com</a>
+    </div>
+    <p>길거리 장사 대전 · 만든이 WildStorm82</p>
+    <p style="margin-top:.5rem;font-size:.82rem">
+      이 페이지는 방송사·제작진과 무관한 개인 개발자의 게임 소개 페이지입니다.
+      본문에 나오는 방송 제목은 해당 권리자의 것이며, 게임과 방송을 구별해 알려드리기 위해서만 썼습니다.</p>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "@id": "https://dangel8282.github.io/street-food-game/#game",
+      "name": "길거리 장사 대전",
+      "alternateName": "Street Vendor Battle",
+      "url": "https://dangel8282.github.io/street-food-game/",
+      "description": "한 거리에 노점 스무 곳이 서서 목표 매출을 먼저 찍는 순서로 순위가 갈리는 3분짜리 길거리 음식 요리 게임. 상권 여덟 곳, 메뉴 카드 57장.",
+      "image": "https://dangel8282.github.io/street-food-game/img/og.jpg",
+      "inLanguage": ["ko", "en"],
+      "applicationCategory": "GameApplication",
+      "genre": ["요리 게임", "경영 시뮬레이션", "캐주얼"],
+      "gamePlatform": "Android",
+      "operatingSystem": "Android 7.0+",
+      "playMode": "SinglePlayer",
+      "author": { "@type": "Person", "name": "WildStorm82", "email": "joohwan82@gmail.com" },
+      "publisher": { "@type": "Person", "name": "WildStorm82" },
+      "downloadUrl": "https://play.google.com/store/apps/details?id=com.wildstorm.streetvendorbattle",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.wildstorm.streetvendorbattle",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "KRW" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dangel8282.github.io/street-food-game/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "무료인가요? 광고는 어떻게 나오나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "무료입니다. 배너 광고는 없습니다. 판 사이에 전면 광고가 뜨고, 보상형 광고는 보상을 두 배로 받거나 지원금을 받을 때 직접 누를 때만 나옵니다. 5,900원짜리 광고 제거를 사면 전면 광고가 안 뜨고, 보상형 자리는 광고를 안 보고도 보상을 그대로 받습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "뽑기를 현금으로 살 수 있나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "없습니다. 카드는 장사로 번 돈으로만 뽑습니다. 인앱 결제는 광고 제거 하나뿐입니다. 뽑기 확률은 S 5%, A 12%, B 35%, C 48% 이고 뽑기 화면에 그대로 적혀 있습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "인터넷이 있어야 하나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "판 자체는 인터넷 없이 돌아갑니다. 순위표와 광고만 안 나옵니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "회원가입이나 로그인이 필요한가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "없습니다. 받으면 바로 시작합니다. 다만 라운드를 끝까지 끊은 판은 가게 상호명과 함께 순위표에 올라갑니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "한 판이 정말 3분인가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "길어야 3분입니다. 목표 매출을 먼저 찍으면 거기서 끝나니 보통은 더 짧습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "어떤 기기에서 되나요? 용량은요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "안드로이드 7.0 이상이면 됩니다. 내려받는 크기는 약 55MB입니다. 태블릿에서도 돌아갑니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "아이폰에서도 되나요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "아직 안드로이드만 있습니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "스트릿 레스토랑 파이터 공식 게임인가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "아닙니다. tvN 스트릿 레스토랑 파이터와 아무 관계가 없습니다. 방송사, 제작진, 출연자와 무관한 1인 개발 게임이고, 방송에 나온 팀이나 가게나 메뉴는 이 게임에 하나도 들어 있지 않습니다. 길에서 노점을 열고 매출로 겨룬다는 소재가 겹칠 뿐입니다." }
+        },
+        {
+          "@type": "Question",
+          "name": "대전이면 격투 게임인가요?",
+          "acceptedAnswer": { "@type": "Answer", "text": "아닙니다. 겨룬다는 뜻의 대전입니다. 대전광역시와도 상관없습니다. 싸우는 장면은 없고 요리하고 파는 게 전부입니다." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
